@@ -1,0 +1,4 @@
+alias l="ls -lAh"
+alias h1="head -n1"
+alias t1="tail -n1"
+alias s="du . -h -d 1"
