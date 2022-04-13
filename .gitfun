@@ -1,0 +1,31 @@
+# Define used colors
+YELLOW="\e[93m"
+RED="\e[31m"
+GREEN="\e[32m"
+ENDCOLOR="\e[0m"
+
+git_untracked() {
+    n=$(git ls-files -o 2> /dev/null | wc -l)
+    if [[ $n -gt -1 ]]
+    then
+        echo "U:$n"
+    fi
+}
+git_modified() {
+    n=$(git ls-files -m 2> /dev/null | wc -l)
+    if [[ $n -gt -1 ]]
+    then
+        echo "M:$n"
+    fi
+}
+
+parse_git_status() {
+     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1) [$(git_modified), $(git_untracked)]/'
+}
+parse_git_branch() {
+     b=$( git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/' )
+     if [ -z "$b"]; then
+       
+     fi
+}
+PS1="\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\e[33;33m\$(parse_git_branch)\[\033[00m\]\n$ "
